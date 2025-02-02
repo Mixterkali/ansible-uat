@@ -8,7 +8,7 @@
     proxmox_api_user: "{{ lookup('env', 'root@pam') }}"  # Proxmox Username
     proxmox_api_password: "{{ lookup('env', '1623af13-06a4-40f1-aca3-4ba3c3a1f273') }}"  # Proxmox Password
     proxmox_node: "{{ lookup('env', 'pve-test1') }}"  # Proxmox Node Name
-    vm_ids: [100]  # List of VM IDs to start
+    vm_ids: [101]  # List of VM IDs to start
 
   tasks:
     - name: Start each VM
@@ -31,7 +31,7 @@
 
     - name: Wait for all VMs to be fully started
       uri:
-        url: "https://192.168.1.200:8006/api2/json/nodes/pve-test1/qemu/item/status/current"
+        url: "https://192.168.1.200:8006/api2/json/nodes/pve-test1/qemu/test1/item/status/current"
         method: GET
         user: "root@pam"
         password: "1623af13-06a4-40f1-aca3-4ba3c3a1f273"
