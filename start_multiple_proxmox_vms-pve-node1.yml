@@ -1,0 +1,48 @@
+---
+- name: Start Multiple VMs on Proxmox
+  hosts: localhost
+  gather_facts: no
+
+  vars:
+    https://192.168.100.131:8006/api2/json/: "{{ lookup('env', 'https://192.168.100.131:8006/api2/json/') }}"  # Proxmox API URL
+    root: "{{ lookup('env', 'root') }}"  # Proxmox Username
+    P@$$2292: "{{ lookup('env', 'P@$$2292') }}"  # Proxmox Password
+    pve-node1: "{{ lookup('env', 'pve-node1') }}"  # Proxmox Node Name
+    vm_ids: [100, 102, 103]  # List of VM IDs to start
+
+  tasks:
+    - name: Start each VM
+      uri:
+        url: "{{ https://192.168.100.131:8006/api2/json/ }}/api2/json/nodes/{{ pve-node1 }}/qemu/{{ item }}/status/start"
+        method: POST
+        user: "{{ root }}"
+        password: "{{ P@$$2292 }}"
+        force_basic_auth: yes
+        headers:
+          Content-Type: "application/json"
+        status_code: 200
+      loop: "{{ vm_ids }}"
+      register: start_results
+
+    - name: Show API responses
+      debug:
+        var: start_results.results
+
+    - name: Wait for all VMs to be fully started
+      uri:
+        url: "{{ https://192.168.100.131:8006/api2/json/ }}/api2/json/nodes/{{ pve-node1 }}/qemu/{{ item }}/status/current"
+        method: GET
+        user: "{{ root }}"
+        password: "{{ P@$$2292 }}"
+        force_basic_auth: yes
+        headers:
+          Content-Type: "application/json"
+      register: vm_status
+      until: vm_status.json.data.status == "running"
+      retries: 10
+      delay: 5
+      loop: "{{ vm_ids }}"
+
+    - name: Confirm all VMs are running
+      debug:
+        msg: "VMs {{ vm_ids }} are now running on Proxmox!"
