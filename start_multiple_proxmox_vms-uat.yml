@@ -16,7 +16,7 @@
         url: "https://192.168.1.200:8006/api2/json/nodes/pve-test1/qemu/item/status/start"
         method: POST
         user: "root@pam"
-        password: "1623af13-06a4-40f1-aca3-4ba3c3a1f273"
+        password: "Pa$$w0rd"
         force_basic_auth: yes
         headers:
           Content-Type: "application/json"
@@ -34,7 +34,7 @@
         url: "https://192.168.1.200:8006/api2/json/nodes/pve-test1/qemu/test1/item/status/current"
         method: GET
         user: "root@pam"
-        password: "1623af13-06a4-40f1-aca3-4ba3c3a1f273"
+        password: "Pa$$w0rd"
         force_basic_auth: yes
         headers:
           Content-Type: "application/json"
