@@ -21,6 +21,7 @@
         headers:
           Content-Type: "application/json"
         status_code: 200
+        validate_certs: no  # Disable SSL certificate verification
       loop: "{{ vm_ids }}"
       register: start_results
 
