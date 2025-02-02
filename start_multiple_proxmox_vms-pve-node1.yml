@@ -4,7 +4,7 @@
   gather_facts: no
 
   vars:
-    proxmox_api_host: "{{ lookup('env', 'https://192.168.100.131:8006') }}"  # Proxmox API URL
+    proxmox_api_host: "{{ lookup('env', 'https://192.168.1.200:8006') }}"  # Proxmox API URL
     proxmox_api_user: "{{ lookup('env', 'root@pam') }}"  # Proxmox Username
     proxmox_api_password: "{{ lookup('env', '1623af13-06a4-40f1-aca3-4ba3c3a1f273') }}"  # Proxmox Password
     proxmox_node: "{{ lookup('env', 'pve-test1') }}"  # Proxmox Node Name
@@ -13,7 +13,7 @@
   tasks:
     - name: Start each VM
       uri:
-        url: "{{ https://192.168.100.131:8006 }}/api2/json/nodes/{{ pve-test1 }}/qemu/{{ item }}/status/start"
+        url: "{{ https://192.168.1.200:8006 }}/api2/json/nodes/{{ pve-test1 }}/qemu/{{ item }}/status/start"
         method: POST
         user: "{{ root@pam }}"
         password: "{{ 1623af13-06a4-40f1-aca3-4ba3c3a1f273 }}"
@@ -30,7 +30,7 @@
 
     - name: Wait for all VMs to be fully started
       uri:
-        url: "{{ https://192.168.100.131:8006 }}/api2/json/nodes/{{ pve-test1 }}/qemu/{{ item }}/status/current"
+        url: "{{ https://192.168.1.200:8006 }}/api2/json/nodes/{{ pve-test1 }}/qemu/{{ item }}/status/current"
         method: GET
         user: "{{ root@pam }}"
         password: "{{ 1623af13-06a4-40f1-aca3-4ba3c3a1f273 }}"
