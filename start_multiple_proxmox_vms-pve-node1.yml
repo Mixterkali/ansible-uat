@@ -4,10 +4,10 @@
   gather_facts: no
 
   vars:
-    https://192.168.100.131:8006/api2/json/: "{{ lookup('env', 'https://192.168.100.131:8006/api2/json/') }}"  # Proxmox API URL
-    root: "{{ lookup('env', 'root') }}"  # Proxmox Username
-    P@$$2292: "{{ lookup('env', 'P@$$2292') }}"  # Proxmox Password
-    pve-node1: "{{ lookup('env', 'pve-node1') }}"  # Proxmox Node Name
+    proxmox_api_host: "{{ lookup('env', 'https://192.168.100.131:8006/api2/json/') }}"  # Proxmox API URL
+    proxmox_api_user: "{{ lookup('env', 'root@pam!anisble') }}"  # Proxmox Username
+    proxmox_api_password: "{{ lookup('env', 'f52f966b-5701-41db-a146-a4ddcb6f6684') }}"  # Proxmox Password
+    proxmox_node: "{{ lookup('env', 'pve-node1') }}"  # Proxmox Node Name
     vm_ids: [100, 102, 103]  # List of VM IDs to start
 
   tasks:
@@ -15,8 +15,8 @@
       uri:
         url: "{{ https://192.168.100.131:8006/api2/json/ }}/api2/json/nodes/{{ pve-node1 }}/qemu/{{ item }}/status/start"
         method: POST
-        user: "{{ root }}"
-        password: "{{ P@$$2292 }}"
+        user: "{{ root@pam!anisble }}"
+        password: "{{ f52f966b-5701-41db-a146-a4ddcb6f6684 }}"
         force_basic_auth: yes
         headers:
           Content-Type: "application/json"
@@ -32,8 +32,8 @@
       uri:
         url: "{{ https://192.168.100.131:8006/api2/json/ }}/api2/json/nodes/{{ pve-node1 }}/qemu/{{ item }}/status/current"
         method: GET
-        user: "{{ root }}"
-        password: "{{ P@$$2292 }}"
+        user: "{{ root@pam!anisble }}"
+        password: "{{ f52f966b-5701-41db-a146-a4ddcb6f6684 }}"
         force_basic_auth: yes
         headers:
           Content-Type: "application/json"
